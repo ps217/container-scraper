@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  metrics-server:
+    image: ps217/docker-challenge-solved-priyesh-metrics
+    container_name: metrics-server
+    ports:
+      - "80:80"
+
+  metrics-scraper:
+    image: python:3.9-slim
+    container_name: metrics-scraper
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./scraper.py:/scraper.py
+    command: >
+      sh -c "pip install requests && python /scraper.py"
